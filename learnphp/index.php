@@ -1,7 +1,14 @@
 <?php
 $test = true;
-$arr = [1, 2, 3, 4, 5];
-$obje = new stdClass();
-$obje->name = 'matu';
-var_dump( $test);
+$test = false;
+$test = true && false;
+$test = true || false;
+$test = !true;
+$test = (true && false) || false || (true && !false);
+$test = true xor false;
+$test = true and false;
+$test = true or false;
+
+
+var_dump($test)
 ?>
