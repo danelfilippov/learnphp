@@ -1,4 +1,4 @@
-<?php 
-echo 'hello world'
-
+<?php
+#$test = 10
+$test = 10
 ?>
