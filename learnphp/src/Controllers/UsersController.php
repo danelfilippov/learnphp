@@ -35,15 +35,10 @@ class UsersController
     {
         $user = User::find($_GET['id']);
         if ($user) {
-            // name and email are part of the password hash, so changing them requires a new password
-            $changed = $user->name !== $_POST['name'] || $user->email !== $_POST['email'];
-            if ($changed && !$_POST['password']) {
-                return redirect('/admin/users/edit?id=' . $user->id);
-            }
             $user->name = $_POST['name'];
             $user->email = $_POST['email'];
             if ($_POST['password']) {
-                $user->password = password_hash($_POST['name'] . $_POST['email'] . $_POST['password'] . md5('yolo'), PASSWORD_BCRYPT);
+                $user->password = password_hash($_POST['password'], PASSWORD_BCRYPT);
             }
             $user->save();
             return redirect('/admin/users');
