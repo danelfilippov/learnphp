@@ -27,22 +27,36 @@ class PublicController
         $title = 'Technology';
         $posts = array_map(fn($post) => (object) $post, [
             [
-                'title' => 'PHP 8.4 property hooks',
-                'created_at' => 'October 1, 2026',
+                'title' => 'Composer ja autoload',
+                'tag' => 'PHP',
+                'read_time' => 3,
+                'created_at' => '10. november 2026',
                 'author' => 'Martin',
-                'body' => 'Property hooks let you define get and set logic directly on class properties.',
+                'body' => 'Composer laeb klassid ise, kui nimeruum vastab kaustale. Nii ei pea iga faili jaoks require-rida kirjutama.',
             ],
             [
-                'title' => 'Building a simple router in PHP',
-                'created_at' => 'October 3, 2026',
+                'title' => 'Andmebaas Dockeris',
+                'tag' => 'Docker',
+                'read_time' => 4,
+                'created_at' => '12. november 2026',
                 'author' => 'Martin',
-                'body' => 'A router maps a URL path to a controller method, so every page has one entry point.',
+                'body' => 'MariaDB käib docker compose abil konteineris, nii et andmebaasi ei pea arvutisse eraldi installima.',
             ],
             [
-                'title' => 'Why use Git for every project',
-                'created_at' => 'October 5, 2026',
+                'title' => 'Paroolid password_hash abil',
+                'tag' => 'Turvalisus',
+                'read_time' => 2,
+                'created_at' => '14. november 2026',
                 'author' => 'Martin',
-                'body' => 'Version control keeps a history of changes and makes it easy to share code.',
+                'body' => 'Parooli ei salvestata kunagi lihttekstina. password_hash teeb räsi ja password_verify kontrollib seda sisselogimisel.',
+            ],
+            [
+                'title' => 'MVC lühidalt',
+                'tag' => 'Arhitektuur',
+                'read_time' => 3,
+                'created_at' => '16. november 2026',
+                'author' => 'Martin',
+                'body' => 'Mudel räägib andmebaasiga, controller otsustab, mida teha, ja vaade näitab tulemust kasutajale.',
             ],
         ]);
         view('tech', compact('title', 'posts'));

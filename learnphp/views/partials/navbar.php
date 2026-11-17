@@ -46,9 +46,10 @@
     </header>
     <div class="nav-scroller py-1 mb-3 border-bottom">
         <nav class="nav nav-underline justify-content-between">
-            <a class="nav-item nav-link link-body-emphasis active" href="/">World</a>
-            <a class="nav-item nav-link link-body-emphasis" href="/us">U.S.</a>
-            <a class="nav-item nav-link link-body-emphasis" href="/tech">Technology</a>
+            <?php $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
+            <a class="nav-item nav-link link-body-emphasis <?= $currentPath === '/' ? 'active' : '' ?>" href="/">World</a>
+            <a class="nav-item nav-link link-body-emphasis <?= $currentPath === '/us' ? 'active' : '' ?>" href="/us">U.S.</a>
+            <a class="nav-item nav-link link-body-emphasis <?= $currentPath === '/tech' ? 'active' : '' ?>" href="/tech">Technology</a>
             <a class="nav-item nav-link link-body-emphasis" href="/form">Form</a>
             <a class="nav-item nav-link link-body-emphasis" href="/admin/posts">Posts</a>
             <a class="nav-item nav-link link-body-emphasis" href="/admin/users">Users</a>
