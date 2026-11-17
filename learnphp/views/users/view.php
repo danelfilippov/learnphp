@@ -1,32 +1,32 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
+
+<?php
+$details = [
+    'ID' => $user->id,
+    'Email' => $user->email,
+    'Password hash' => $user->password,
+    'Created' => $user->created_at,
+    'Updated' => $user->updated_at,
+];
+?>
+
 <main class="container">
-    <table class="table table-hover table-striped">
-        <tbody>
-            <tr>
-                <th>ID</th>
-                <td><?= $user->id ?></td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td><?= $user->name ?></td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td><?= $user->email ?></td>
-            </tr>
-            <tr>
-                <th>Password hash</th>
-                <td><?= $user->password ?></td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td><?= $user->created_at ?></td>
-            </tr>
-            <tr>
-                <th>Updated</th>
-                <td><?= $user->updated_at ?></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h1 class="h4 mb-0"><?= htmlspecialchars($user->name) ?></h1>
+            <a href="/admin/users/edit?id=<?= $user->id ?>" class="btn btn-sm btn-outline-warning">Edit</a>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <?php foreach ($details as $label => $value): ?>
+                    <dt class="col-sm-3"><?= $label ?></dt>
+                    <dd class="col-sm-9 text-break"><?= htmlspecialchars($value) ?></dd>
+                <?php endforeach ?>
+            </dl>
+        </div>
+    </div>
+
+    <a href="/admin/users">&larr; Back to users</a>
 </main>
+
 <?php include __DIR__ . '/../partials/footer.php'; ?>

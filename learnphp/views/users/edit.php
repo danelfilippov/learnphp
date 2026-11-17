@@ -1,20 +1,38 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
-<main class="container">
+
+<?php
+$fields = [
+    'name' => ['label' => 'Name', 'type' => 'text'],
+    'email' => ['label' => 'Email', 'type' => 'email'],
+];
+?>
+
+<main class="container" style="max-width: 540px;">
+    <h1 class="h3 mb-4">Edit user #<?= $user->id ?></h1>
+
     <form action="/admin/users/edit?id=<?= $user->id ?>" method="POST">
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input value="<?= $user->name ?>" name="name" type="text" class="form-control" id="name" placeholder="User name">
+        <?php foreach ($fields as $name => $field): ?>
+            <div class="form-floating mb-3">
+                <input
+                    type="<?= $field['type'] ?>"
+                    name="<?= $name ?>"
+                    id="<?= $name ?>"
+                    class="form-control"
+                    placeholder="<?= $field['label'] ?>"
+                    value="<?= htmlspecialchars($user->$name) ?>">
+                <label for="<?= $name ?>"><?= $field['label'] ?></label>
+            </div>
+        <?php endforeach ?>
+
+        <div class="form-floating mb-1">
+            <input type="password" name="password" id="password" class="form-control" placeholder="New password">
+            <label for="password">New password</label>
         </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input value="<?= $user->email ?>" name="email" type="email" class="form-control" id="email" placeholder="User email">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">New password</label>
-            <input name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp">
-            <div id="passwordHelp" class="form-text">Leave empty to keep the current password. Required when changing name or email.</div>
-        </div>
-        <button class="btn btn-primary">Update</button>
+        <p class="form-text mb-4">Leave empty to keep the current password.</p>
+
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a href="/admin/users" class="btn btn-link">Cancel</a>
     </form>
 </main>
+
 <?php include __DIR__ . '/../partials/footer.php'; ?>
