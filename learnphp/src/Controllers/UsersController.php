@@ -8,51 +8,73 @@ class UsersController
 {
     public function index()
     {
-        $title = 'Users';
-        $users = User::all();
-        view('users/index', compact('title', 'users'));
+        view('users/index', [
+            'title' => 'Users',
+            'users' => User::all(),
+        ]);
     }
 
     public function view()
     {
-        $user = User::find($_GET['id']);
-        if ($user) {
-            return view('users/view', compact('user'));
+        $user = $this->userFromQuery();
+        if (!$user) {
+            return $this->notFound();
         }
-        echo 404;
+
+        view('users/view', ['user' => $user]);
     }
 
     public function edit()
     {
-        $user = User::find($_GET['id']);
-        if ($user) {
-            return view('users/edit', compact('user'));
+        $user = $this->userFromQuery();
+        if (!$user) {
+            return $this->notFound();
         }
-        echo 404;
+
+        view('users/edit', ['user' => $user]);
     }
 
     public function update()
     {
-        $user = User::find($_GET['id']);
-        if ($user) {
-            $user->name = $_POST['name'];
-            $user->email = $_POST['email'];
-            if ($_POST['password']) {
-                $user->password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            }
-            $user->save();
-            return redirect('/admin/users');
+        $user = $this->userFromQuery();
+        if (!$user) {
+            return $this->notFound();
         }
-        echo 404;
+
+        $user->name = $_POST['name'];
+        $user->email = $_POST['email'];
+
+        // empty password field = keep the old password
+        $newPassword = $_POST['password'] ?? '';
+        if ($newPassword !== '') {
+            $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
+        }
+
+        $user->save();
+        redirect('/admin/users');
     }
 
     public function delete()
     {
-        $user = User::find($_GET['id']);
-        if ($user) {
-            $user->delete();
-            return redirect('/admin/users');
+        $user = $this->userFromQuery();
+        if (!$user) {
+            return $this->notFound();
         }
+
+        $user->delete();
+        redirect('/admin/users');
+    }
+
+    // Finds the user whose id is in the address, e.g. /admin/users/view?id=3
+    private function userFromQuery()
+    {
+        $id = (int) ($_GET['id'] ?? 0);
+        return $id > 0 ? User::find($id) : null;
+    }
+
+    private function notFound()
+    {
+        http_response_code(404);
         echo 404;
     }
 }
